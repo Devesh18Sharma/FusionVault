@@ -1,46 +1,51 @@
-import { NavLinks } from '@/constants'
-import Image from 'next/image'
-import Link from 'next/link'
-import AuthProvider from './AuthProvider'
+import Image from "next/image";
+import Link from "next/link";
 
-const Navbar = () => {
-    const session={};
+import { NavLinks } from "@/constants";
+import { getCurrentUser } from "@/lib/session";
+
+import AuthProviders from "./AuthProvider";
+import Button from "./Button";
+import ProfileMenu from "./ProfileMenu";
+
+const Navbar = async () => {
+  const session = await getCurrentUser()
+
   return (
-
     <nav className='flexBetween navbar'>
-        <div flex-1 flex-start gap-10>
-            <Link href="/">
-                <Image
-                src="/logo.svg"
-                width={115}
-                height={43}
-                alt="Flexibble"
-                />
+      <div className='flex-1 flexStart gap-10'>
+        <Link href='/'>
+          <Image
+            src='/logo.svg'
+            width={116}
+            height={43}
+            alt='logo'
+          />
+        </Link>
+        <ul className='xl:flex hidden text-small gap-7'>
+          {NavLinks.map((link) => (
+            <Link href={link.href} key={link.text}>
+              {link.text}
             </Link>
-                <ul className='xl:flex hidden text-small gap-7 '>
-                    {NavLinks.map((link)=>(
-                        <Link href={link.href} key={link.key}>
-                            {link.text}
-                        </Link>
-                    ))}
-                </ul>
+          ))}
+        </ul>
+      </div>
 
-        </div>
+      <div className='flexCenter gap-4'>
+        {session?.user ? (
+          <>
+            <ProfileMenu session={session} />
 
-        <div className='flexCenter gap-4'>
-            {session ? (
-                <>
-                UserPhoto
-                <Link href="/create-project ">
-                Share Work
-                </Link>
-                </>
-            ):(
-                <AuthProvider/>
-            )}
-        </div>
+            <Link href="/create-project">
+              <Button title='Share work' />
+            </Link>
+          </>
+        ) : (
+          <AuthProviders />
+        )}
+      </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
