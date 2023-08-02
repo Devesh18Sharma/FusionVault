@@ -115,7 +115,7 @@ const ProjectForm = ({ type, session, project }: Props) => {
             <FormField
                 title="Title"
                 state={form.title}
-                placeholder="Flexibble"
+                placeholder="FusionVault"
                 setState={(value) => handleStateChange('title', value)}
             />
 
