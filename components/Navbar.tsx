@@ -16,9 +16,10 @@ const Navbar = async () => {
       <div className='flex-1 flexStart gap-10'>
         <Link href='/'>
           <Image
+          className="rounded-full "
             src='/logo.svg'
-            width={116}
-            height={43}
+            width={58}
+            height={22}
             alt='logo'
           />
         </Link>
